@@ -6,7 +6,7 @@ class Farm(db.Model):
     __tablename__ = 'farms'
     
     id = db.Column(db.Integer, primary_key=True)
-    area = db.Column(db.Numeric(10, 2), nullable=False)  # in hectares
+    area = db.Column(db.Numeric(10, 2), nullable=False)  # in Acres
     village = db.Column(db.String(100), nullable=False)
     crop_grown = db.Column(db.String(100), nullable=False)
     sowing_date = db.Column(db.Date, nullable=False)
