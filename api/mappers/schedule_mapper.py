@@ -37,16 +37,3 @@ class ScheduleMapper:
             quantity_unit=schedule_helper.quantity_unit,
             farm_id=schedule_helper.farm_id
         )
-    
-    @staticmethod
-    def create_helper_from_dict(data: dict) -> ScheduleHelper:
-        return ScheduleHelper(
-            id=None,
-            days_after_sowing=data.get('days_after_sowing'),
-            fertilizer=data.get('fertilizer'),
-            quantity=data.get('quantity'),
-            quantity_unit=data.get('quantity_unit'),
-            farm_id=data.get('farm_id'),
-            created_at=None,
-            farm=None
-        )

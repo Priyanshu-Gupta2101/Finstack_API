@@ -9,10 +9,10 @@ class ValidationService:
         if not phone_number:
             raise ValueError("Phone number is required")
         
-        cleaned = re.sub(r'[^\d+]', '', phone_number)
-        
-        if not re.match(r'^\+?\d{10,15}$', cleaned):
-            raise ValueError("Invalid phone number format")
+        cleaned = re.sub(r'\D', '', phone_number)
+
+        if not re.fullmatch(r'\d{10}', cleaned):
+            raise ValueError("Phone number must be exactly 10 digits")
         
         return cleaned
     
