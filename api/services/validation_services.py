@@ -6,7 +6,6 @@ class ValidationService:
     
     @staticmethod
     def validate_phone_number(phone_number):
-        """Validate phone number format"""
         if not phone_number:
             raise ValueError("Phone number is required")
         
@@ -19,7 +18,6 @@ class ValidationService:
     
     @staticmethod
     def validate_date(date):
-        """Validate and parse datestring"""
         if not date:
             raise ValueError("Date is required")
         try:
@@ -29,8 +27,7 @@ class ValidationService:
         
     @staticmethod
     def validate_quantity_unit(unit):
-        """Validate quantity units"""
         units = ['ton', 'kg', 'g', 'L', 'mL']
         if unit not in units:
             raise ValueError("Invalid quantity unit type, use ton, kg, g, L, mL")
-        return unit
+        return True

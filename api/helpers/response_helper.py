@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 
 class ResponseHelper:
-    """Helper for formatting API responses"""
     
     @staticmethod
     def success_response(data, message="API ops success", status_code=200):

@@ -1,54 +1,46 @@
 from datetime import datetime, timedelta
 from repositories import ScheduleRepository, FarmRepository
 from .validation_services import ValidationService
+from mappers import ScheduleMapper
 
 class ScheduleServices:
     """Service for scheduling business logic"""
-    
-    def __init__(self):
-        self.schedule_repo = ScheduleRepository()
-        self.farm_repo = FarmRepository()
-        self.validation_service = ValidationService()   
 
-    def create_schedule(self, schedule_data):
-        if not schedule_data.get('days_after_sowing') or schedule_data['days_after_sowing'] < 0:
+    @staticmethod
+    def create_schedule(schedule_data):
+        if not schedule_data['days_after_sowing'] or schedule_data['days_after_sowing'] < 0:
             raise ValueError("Valid days after sowing is required")
         
-        if not schedule_data.get('fertilizer'):
+        if not schedule_data['fertilizer']:
             raise ValueError("Fertilizer name is required")
         
-        if not schedule_data.get('quantity') or schedule_data['quantity'] <= 0:
+        if not schedule_data['quantity'] or schedule_data['quantity'] <= 0:
             raise ValueError("Valid quantity is required")
         
-        if not schedule_data.get('farm_id'):
+        if not schedule_data['farm_id']:
             raise ValueError("Farm ID is required")
         
-        farm = self.farm_repo.get_by_id(schedule_data['farm_id'])
+        farm = FarmRepository.get_by_id(schedule_data['farm_id'])
         if not farm:
             raise ValueError("Invalid farm ID")
         
-        quantity_unit = self.validation_service.validate_quantity_unit(
-            schedule_data['quantity_unit']
-        )
+        ValidationService.validate_quantity_unit(schedule_data['quantity_unit'])
         
-        return self.schedule_repo.create(
-            days_after_sowing=schedule_data['days_after_sowing'],
-            fertilizer=schedule_data['fertilizer'],
-            quantity=schedule_data['quantity'],
-            quantity_unit=quantity_unit,
-            farm_id=schedule_data['farm_id']
-        )
+        return ScheduleRepository.create(ScheduleMapper.create_helper_from_dict(schedule_data))
     
-    def get_schedules_due_today(self):
+    @staticmethod
+    def get_schedules_due_today():
         today = datetime.now().date()
-        return self.schedule_repo.get_schedules_by_date(today)
+        return ScheduleRepository.get_schedules_by_date(today)
     
-    def get_schedules_due_tomorrow(self):
+    @staticmethod
+    def get_schedules_due_tomorrow():
         tomorrow = datetime.now().date() + timedelta(days=1)
-        return self.schedule_repo.get_schedules_by_date(tomorrow)
+        return ScheduleRepository.get_schedules_by_date(tomorrow)
     
-    def calculate_bill(self, farmer_id, fertilizer_prices):
-        schedules = self.schedule_repo.get_by_farmer(farmer_id)
+    @staticmethod
+    def calculate_bill(farmer_id, fertilizer_prices):
+        schedules = ScheduleRepository.get_by_farmer(farmer_id)
         
         if not schedules:
             raise ValueError("No schedules found for this farmer")

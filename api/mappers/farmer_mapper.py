@@ -1,27 +1,45 @@
-from .country_mapper import CountryMapper
+from helpers import FarmerHelper
+from mappers import CountryMapper
+from models import Farmer
 
 class FarmerMapper:
-    """Mapper for Farmer data transformations"""
     
     @staticmethod
-    def to_dict(farmer):
-        if not farmer:
+    def model_to_helper(farmer_model, include_country: bool = False) -> FarmerHelper:
+        if not farmer_model:
             return None
-        return {
-            'id': farmer.id,
-            'phone_number': farmer.phone_number,
-            'name': farmer.name,
-            'language': farmer.language,
-            'country_id': farmer.country_id,
-            'country': CountryMapper.to_dict(farmer.country),
-            'created_at': farmer.created_at.isoformat()
-        }
+        
+        country_helper = None
+        if include_country and farmer_model.country:
+            country_helper = CountryMapper.model_to_helper(farmer_model.country)
+        
+        return FarmerHelper(
+            id=farmer_model.id,
+            phone_number=farmer_model.phone_number,
+            name=farmer_model.name,
+            language=farmer_model.language,
+            country_id=farmer_model.country_id,
+            created_at=farmer_model.created_at,
+            country=country_helper
+        )
     
     @staticmethod
-    def from_request(data):
-        return {
-            'phone_number': data.get('phone_number', '').strip(),
-            'name': data.get('name', '').strip(),
-            'language': data.get('language', '').strip(),
-            'country_id': data.get('country_id')
-        }
+    def helper_to_model(farmer_helper: FarmerHelper) -> Farmer:
+        return Farmer(
+            phone_number=farmer_helper.phone_number,
+            name=farmer_helper.name,
+            language=farmer_helper.language,
+            country_id=farmer_helper.country_id
+        )
+    
+    @staticmethod
+    def create_helper_from_dict(data: dict) -> FarmerHelper:
+        return FarmerHelper(
+            id=None,
+            phone_number=data.get('phone_number'),
+            name=data.get('name'),
+            language=data.get('language'),
+            country_id=data.get('country_id'),
+            created_at=None,
+            country=None
+        )

@@ -1,26 +1,23 @@
 from models import Farm
 from database import db
+from mappers import FarmMapper
 
 class FarmRepository:
     """Repository for Farm operations"""
     
     @staticmethod
-    def create(area, village, crop_grown, sowing_date, farmer_id):
-        farm = Farm(
-            area=area,
-            village=village,
-            crop_grown=crop_grown,
-            sowing_date=sowing_date,
-            farmer_id=farmer_id
-        )
+    def create(farm_helper):
+        farm = FarmMapper.helper_to_model(farm_helper)
         db.session.add(farm)
         db.session.commit()
-        return farm
+        return FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True)
     
     @staticmethod
     def get_by_id(farm_id):
-        return Farm.query.get(farm_id)
+        return FarmMapper.model_to_helper(Farm.query.get(farm_id), include_country=True, include_farmer=True)
     
     @staticmethod
     def get_by_farmer(farmer_id):
-        return Farm.query.filter_by(farmer_id=farmer_id).all()
+        farms = Farm.query.filter_by(farmer_id=farmer_id).all()
+
+        return [FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True) for farm in farms]
