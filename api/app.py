@@ -2,7 +2,7 @@ from repositories import CountryRepository
 from database import app, db
 from helpers.response_helper import ResponseHelper
 from flask import jsonify, request
-from mappers import CountryMapper
+from helpers import CountryHelper
 from sqlalchemy.exc import IntegrityError
 from views import *
 from mappers import *
@@ -24,7 +24,7 @@ def create_country():
         if not data['code']:
             raise ValueError("Code is required")
 
-        country = CountryRepository.create(CountryMapper.create_helper_from_dict(data))
+        country = CountryRepository.create(CountryHelper.from_dict(data))
         
         response = ResponseHelper.success_response(
             country.to_dict(),

@@ -1,6 +1,5 @@
 from helpers.response_helper import ResponseHelper
 from flask import jsonify
-from mappers import ScheduleMapper
 from services import ScheduleServices
 
 class ScheduleViews:

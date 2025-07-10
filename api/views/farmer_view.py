@@ -1,7 +1,6 @@
 from helpers.response_helper import ResponseHelper
 from flask import jsonify
 from sqlalchemy.exc import IntegrityError
-from mappers import FarmerMapper
 from services import FarmerServices
 
 class FarmerViews:

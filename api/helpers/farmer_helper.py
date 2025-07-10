@@ -29,3 +29,14 @@ class FarmerHelper:
             
         return result
     
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(
+            id=None,
+            phone_number=data.get('phone_number'),
+            name=data.get('name'),
+            language=data.get('language'),
+            country_id=data.get('country_id'),
+            created_at=None,
+            country=None
+        )

@@ -1,6 +1,5 @@
 from helpers.response_helper import ResponseHelper
 from flask import jsonify
-from mappers import FarmMapper
 from services import FarmServices
 
 class FarmViews:

@@ -31,3 +31,16 @@ class FarmHelper:
             result['farmer'] = self.farmer.to_dict()
             
         return result
+    
+    @classmethod
+    def from_dict(cls, data: dict):        
+        
+        return cls(
+            id=None,
+            area=float(data.get('area', 0)),
+            village=data.get('village'),
+            crop_grown=data.get('crop_grown'),
+            sowing_date=data.get('sowing_date'),
+            farmer_id=data.get('farmer_id'),
+            created_at=None
+        )

@@ -33,16 +33,3 @@ class FarmMapper:
             sowing_date= farm_helper.sowing_date,
             farmer_id= farm_helper.farmer_id
         )
-    
-    @staticmethod
-    def create_helper_from_dict(data: dict) -> FarmHelper:        
-        
-        return FarmHelper(
-            id=None,
-            area=float(data.get('area', 0)),
-            village=data.get('village'),
-            crop_grown=data.get('crop_grown'),
-            sowing_date=data.get('sowing_date'),
-            farmer_id=data.get('farmer_id'),
-            created_at=None
-        )

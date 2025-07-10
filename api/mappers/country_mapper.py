@@ -21,14 +21,5 @@ class CountryMapper:
             name=country_helper.name,
             code=country_helper.code
         )
-    
-    @staticmethod
-    def create_helper_from_dict(data: dict) -> CountryHelper:
-        return CountryHelper(
-            name=data.get('name').strip() if data.get('name') else None,
-            code=data.get('code').strip().upper() if data.get('code') else None,
-            id=None,
-            created_at=None
-        )
 
     

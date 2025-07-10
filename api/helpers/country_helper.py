@@ -16,3 +16,12 @@ class CountryHelper:
             'code': self.code,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
+    
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(
+            name=data.get('name').strip() if data.get('name') else None,
+            code=data.get('code').strip().upper() if data.get('code') else None,
+            id=None,
+            created_at=None
+        )

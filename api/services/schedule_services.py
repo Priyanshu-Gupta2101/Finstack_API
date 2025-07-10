@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from repositories import ScheduleRepository, FarmRepository
 from .validation_services import ValidationService
-from mappers import ScheduleMapper
+from helpers import ScheduleHelper
 
 class ScheduleServices:
     """Service for scheduling business logic"""
@@ -26,7 +26,7 @@ class ScheduleServices:
         
         ValidationService.validate_quantity_unit(schedule_data['quantity_unit'])
         
-        return ScheduleRepository.create(ScheduleMapper.create_helper_from_dict(schedule_data))
+        return ScheduleRepository.create(ScheduleHelper.from_dict(schedule_data))
     
     @staticmethod
     def get_schedules_due_today():

@@ -37,3 +37,17 @@ class ScheduleHelper:
             result['farm'] = self.farm.to_dict()
             
         return result
+    
+    @classmethod
+    def from_dict(cls, data: dict):
+        
+        return cls(
+            id=None,
+            days_after_sowing=data.get('days_after_sowing'),
+            fertilizer=data.get('fertilizer'),
+            quantity=data.get('quantity'),
+            quantity_unit=data.get('quantity_unit'),
+            farm_id=data.get('farm_id'),
+            created_at=None,
+            farm=None
+        )

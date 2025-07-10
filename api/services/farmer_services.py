@@ -1,6 +1,6 @@
 from repositories import FarmerRepository, CountryRepository
 from .validation_services import ValidationService
-from mappers import FarmerMapper
+from helpers import FarmerHelper
 
 class FarmerServices:
     """Service for farmer business logic"""
@@ -28,17 +28,13 @@ class FarmerServices:
         if existing_farmer:
             raise ValueError("Farmer with this phone number already exists in this country")
         
-        farmer_helper = FarmerMapper.create_helper_from_dict(farmer_data)
-        
-        return FarmerRepository.create(farmer_helper)
+        return FarmerRepository.create(FarmerHelper.from_dict(farmer_data))
 
     @staticmethod
     def get_farmers_by_crop(crop_name):
         if not crop_name:
             raise ValueError("Crop name is required")
 
-        farmers = FarmerRepository.get_farmers_by_crop(crop_name)
-
-        return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers]
+        return FarmerRepository.get_farmers_by_crop(crop_name)
 
     

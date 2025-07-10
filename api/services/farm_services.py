@@ -1,6 +1,6 @@
 from repositories import FarmRepository, FarmerRepository
 from .validation_services import ValidationService
-from mappers import FarmMapper
+from helpers import FarmHelper
 
 class FarmServices:
     """Service for farm business logic"""
@@ -30,7 +30,7 @@ class FarmServices:
 
         farm_data['sowing_date'] = sowing_date
         
-        farm = FarmRepository.create(FarmMapper.create_helper_from_dict(farm_data))
+        farm = FarmRepository.create(FarmHelper.from_dict(farm_data))
 
         return farm
     
