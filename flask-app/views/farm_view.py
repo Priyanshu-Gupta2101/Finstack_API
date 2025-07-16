@@ -21,4 +21,4 @@ class FarmViews:
         except ValueError as e:
             return jsonify(ResponseHelper.error_response(str(e), 400)), 400
         except Exception as e:
-            return jsonify(ResponseHelper.error_response("Internal server error", 500)), 500
+            return jsonify(ResponseHelper.error_response("Internal server error: " + str(e), 500)), 500

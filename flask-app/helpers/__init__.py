@@ -3,3 +3,4 @@ from .farm_helper import FarmHelper
 from .farmer_helper import FarmerHelper
 from .schedule_helper import ScheduleHelper
 from .country_helper import CountryHelper
+from .auth_helper import AuthHelper

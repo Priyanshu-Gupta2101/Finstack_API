@@ -21,7 +21,7 @@ class ScheduleViews:
         except ValueError as e:
             return jsonify(ResponseHelper.error_response(str(e), 400)), 400
         except Exception as e:
-            return jsonify(ResponseHelper.error_response("Internal server error", 500)), 500
+            return jsonify(ResponseHelper.error_response("Internal server error: " + str(e), 500)), 500
 
     @staticmethod  
     def get_schedules_due_today():
@@ -37,7 +37,7 @@ class ScheduleViews:
             return jsonify(response), 200
             
         except Exception as e:
-            return jsonify(ResponseHelper.error_response("Internal server error", 500)), 500
+            return jsonify(ResponseHelper.error_response("Internal server error: " + str(e), 500)), 500
     
     @staticmethod
     def get_schedules_due_tomorrow():
@@ -53,7 +53,7 @@ class ScheduleViews:
             return jsonify(response), 200
             
         except Exception as e:
-            return jsonify(ResponseHelper.error_response("Internal server error", 500)), 500
+            return jsonify(ResponseHelper.error_response("Internal server error: " + str(e), 500)), 500
     
     @staticmethod
     def calculate_bill_view(farmer_id, fertilizer_prices):
@@ -70,4 +70,4 @@ class ScheduleViews:
         except ValueError as e:
             return jsonify(ResponseHelper.error_response(str(e), 400)), 400
         except Exception as e:
-            return jsonify(ResponseHelper.error_response("Internal server error", 500)), 500
+            return jsonify(ResponseHelper.error_response("Internal server error: " + str(e), 500)), 500

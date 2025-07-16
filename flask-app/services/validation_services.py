@@ -31,3 +31,27 @@ class ValidationService:
         if unit not in units:
             raise ValueError("Invalid quantity unit type, use ton, kg, g, L, mL")
         return True
+
+    @staticmethod
+    def validate_email(email):
+        if not email:
+            raise ValueError("Email is required")
+        
+        email = email.strip()
+        
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        if not re.match(email_pattern, email):
+            raise ValueError("Invalid email format")
+        
+        if len(email) > 254:
+            raise ValueError("Email address is too long")
+        
+        if '..' in email:
+            raise ValueError("Email cannot contain consecutive dots")
+        
+        local_part = email.split('@')[0]
+        if local_part.startswith('.') or local_part.endswith('.'):
+            raise ValueError("Email local part cannot start or end with a dot")
+        
+        return email
