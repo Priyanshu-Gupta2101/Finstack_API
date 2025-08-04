@@ -57,4 +57,4 @@ class AuthRepository:
     
     @staticmethod
     def is_valid_role(role_name: str) -> bool:
-        return role_name in {"super_user", "admin", "user"}
+        return role_name in [role.value for role in RoleEnum]

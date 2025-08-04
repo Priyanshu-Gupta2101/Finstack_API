@@ -4,7 +4,7 @@ from helpers import AuthHelper
 
 class AuthMapper:
     @staticmethod
-    def model_to_helper(user):
+    def model_to_helper(user: User) -> AuthHelper:
         return AuthHelper(
             id=user.id,
             email=user.email,
@@ -14,7 +14,7 @@ class AuthMapper:
         )
     
     @staticmethod
-    def helper_to_model(helper, role):
+    def helper_to_model(helper: AuthHelper, role:str) -> User:
         if isinstance(role, str):
             role = RoleEnum(role)
     

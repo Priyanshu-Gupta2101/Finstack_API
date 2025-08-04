@@ -14,10 +14,21 @@ class FarmRepository:
     
     @staticmethod
     def get_by_id(farm_id):
-        return FarmMapper.model_to_helper(Farm.query.get(farm_id), include_country=True, include_farmer=True)
+        farm = Farm.query.get(farm_id)
+        if farm is not None:
+            return FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True, include_schedule=True)
+        return None
     
     @staticmethod
     def get_by_farmer(farmer_id):
         farms = Farm.query.filter_by(farmer_id=farmer_id).all()
-
-        return [FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True) for farm in farms]
+        if farms is not None:
+            return [FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True) for farm in farms if farm is not None]
+        return []
+    
+    @staticmethod
+    def get_all():
+        farms = Farm.query.all()
+        if farms is not None:
+            return [FarmMapper.model_to_helper(farm, include_country=True, include_farmer=True) for farm in farms if farm is not None]
+        return []

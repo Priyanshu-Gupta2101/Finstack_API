@@ -12,12 +12,11 @@ services:
       - app-network
 
   flask-app:
-    image: myapp/flask-app:latest
+    image: priyanshuatfinstack/flask-app:latest
     environment:
       - FLASK_ENV=production
       - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/myapp
       - SECRET_KEY=xoufgwugregreguhrohgoerthoier
-      
     networks:
       - app-network
 

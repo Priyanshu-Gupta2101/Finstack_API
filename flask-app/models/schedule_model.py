@@ -1,5 +1,5 @@
 from database import db
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 class Schedule(db.Model):
     """Schedule model with days after sowing, fertilizer, quantity"""
@@ -12,11 +12,8 @@ class Schedule(db.Model):
     quantity_unit = db.Column(db.String(10), nullable=False)
     farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    farm = db.relationship('Farm', back_populates='schedule')
     
     def __repr__(self):
         return f'<Schedule {self.fertilizer} - Day {self.days_after_sowing}>'
-    
-    @property
-    def due_date(self):
-        """Calculate when this schedule is due"""
-        return self.farm.sowing_date + timedelta(days=self.days_after_sowing)

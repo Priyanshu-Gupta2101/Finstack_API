@@ -14,25 +14,48 @@ class FarmerRepository:
     
     @staticmethod
     def get_by_id(farmer_id):
-        return FarmerMapper.model_to_helper(Farmer.query.get(farmer_id), include_country=True)
+        farmer = Farmer.query.get(farmer_id)
+        if farmer is not None:
+            return FarmerMapper.model_to_helper(farmer, include_country=True, include_farms=True)
+        return None
+    
+    @staticmethod
+    def get_all():
+        farmers = Farmer.query.all()
+        if farmers is not None:
+            return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers if farmer is not None]
+        return []
     
     @staticmethod
     def get_by_phone_and_country(phone_number, country_id):
-        return FarmerMapper.model_to_helper(Farmer.query.filter_by(
+        farmer = Farmer.query.filter_by(
             phone_number=phone_number,
             country_id=country_id
-        ).first(), include_country=True)
+        ).first()
+        if farmer is not None:
+            return FarmerMapper.model_to_helper(farmer, include_country=True)
+        return None
     
     @staticmethod
     def get_farmers_by_crop(crop_name):
         farmers = db.session.query(Farmer).join(Farm).filter(
             Farm.crop_grown.ilike(f'%{crop_name}%')
         ).distinct().all()
-
-        return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers]
+        
+        if farmers is not None:
+            return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers if farmer is not None]
+        return []
     
     @staticmethod
     def get_all_by_country(country_id):
         farmers = Farmer.query.filter_by(country_id=country_id).all()
-
-        return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers]
+        if farmers is not None:
+            return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers if farmer is not None]
+        return []
+    
+    @staticmethod
+    def get_active_farmers():
+        farmers = db.session.query(Farmer).join(Farm).distinct().all()
+        if farmers is not None:
+            return [FarmerMapper.model_to_helper(farmer, include_country=True) for farmer in farmers if farmer is not None]
+        return []

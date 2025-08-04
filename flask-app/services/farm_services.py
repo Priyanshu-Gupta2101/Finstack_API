@@ -19,9 +19,7 @@ class FarmServices:
         if not farm_data['farmer_id']:
             raise ValueError("Farmer ID is required")
         
-        farmer = FarmerRepository.get_by_id(
-            farm_data['farmer_id']
-        )
+        farmer = FarmerRepository.get_by_id(farm_data['farmer_id'])
 
         if not farmer:
             raise ValueError("Invalid farmer ID")
@@ -33,4 +31,11 @@ class FarmServices:
         farm = FarmRepository.create(FarmHelper.from_dict(farm_data))
 
         return farm
+    
+    @staticmethod
+    def get_farms_by_id(id):
+        if not id:
+            raise ValueError("Farm id is required")
+
+        return FarmRepository.get_by_id(id)
     

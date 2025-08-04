@@ -13,7 +13,8 @@ class Farm(db.Model):
     farmer_id = db.Column(db.Integer, db.ForeignKey('farmers.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     
-    schedules = db.relationship('Schedule', backref='farm', lazy=True, cascade='all, delete-orphan')
+    schedule = db.relationship('Schedule', back_populates='farm', cascade='all, delete-orphan')
+    farmer = db.relationship('Farmer', back_populates='farm')
     
     def __repr__(self):
         return f'<Farm {self.crop_grown} - {self.village}>'

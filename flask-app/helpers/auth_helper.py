@@ -24,10 +24,10 @@ class AuthHelper:
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
-            email=data.get('email').strip() if data.get('email') else None,
-            password=data.get('password').strip() if data.get('password') else None,
-            role=data.get('role').strip() if data.get('role') else None,
-            id=None,
-            created_at=None,
-            updated_at=None
+            email=data['email'].strip(),
+            password=data['password'].strip() if data.get('password') else None,
+            role=data['role'].strip() if data.get('role') else None,
+            id=data['id'].strip() if data.get('id') else None,
+            created_at=data['created_at'].strip() if data.get('created_at') else None,
+            updated_at=data['updated_at'].strip() if data.get('updated_at') else None
         )

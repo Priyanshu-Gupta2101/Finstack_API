@@ -16,15 +16,26 @@ class ScheduleRepository:
     @staticmethod
     def get_schedules_by_date(day):
         schedules = db.session.query(Schedule).join(Farm).all()
-        return [
-            ScheduleMapper.model_to_helper(s) for s in schedules
-            if s.farm and (s.farm.sowing_date + timedelta(days=s.days_after_sowing)) == day
-        ]
+        if schedules is not None:
+            return [
+                ScheduleMapper.model_to_helper(s) for s in schedules
+                if s is not None and s.farm and (s.farm.sowing_date + timedelta(days=s.days_after_sowing)) == day
+            ]
+        return []
     
     @staticmethod
     def get_by_farmer(farmer_id):
         schedules = db.session.query(Schedule).join(Farm).filter(
             Farm.farmer_id == farmer_id
         ).all()
-
-        return [ScheduleMapper.model_to_helper(schedule) for schedule in schedules]
+        
+        if schedules is not None:
+            return [ScheduleMapper.model_to_helper(schedule) for schedule in schedules if schedule is not None]
+        return []
+    
+    @staticmethod
+    def get_by_id(schedule_id):
+        schedule = Schedule.query.get(schedule_id)
+        if schedule is not None:
+            return ScheduleMapper.model_to_helper(schedule)
+        return None

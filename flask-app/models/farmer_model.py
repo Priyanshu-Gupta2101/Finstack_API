@@ -12,7 +12,8 @@ class Farmer(db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey('countries.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     
-    farms = db.relationship('Farm', backref='farmer', cascade='all, delete-orphan')
+    farm = db.relationship('Farm', back_populates='farmer', cascade='all, delete-orphan')
+    country = db.relationship('Country', back_populates='farmer')
     
     __table_args__ = (db.UniqueConstraint('phone_number', 'country_id', name='unique_phone_per_country'),)
     

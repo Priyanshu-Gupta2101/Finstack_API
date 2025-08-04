@@ -6,7 +6,7 @@ class ScheduleHelper:
     
     def __init__(self, id: Optional[int], days_after_sowing: int, fertilizer: str, 
                  quantity: float, quantity_unit: str, farm_id: int, 
-                 created_at: Optional[datetime], farm: Optional[FarmHelper] = None):
+                 created_at: Optional[datetime], farm: Optional[FarmHelper]):
         self.id = id
         self.days_after_sowing = days_after_sowing
         self.fertilizer = fertilizer
@@ -40,14 +40,13 @@ class ScheduleHelper:
     
     @classmethod
     def from_dict(cls, data: dict):
-        
         return cls(
-            id=None,
-            days_after_sowing=data.get('days_after_sowing'),
-            fertilizer=data.get('fertilizer'),
-            quantity=data.get('quantity'),
-            quantity_unit=data.get('quantity_unit'),
-            farm_id=data.get('farm_id'),
-            created_at=None,
-            farm=None
+            days_after_sowing=int(data['days_after_sowing']) if data.get('days_after_sowing') else None,
+            fertilizer=data['fertilizer'].strip() if data.get('fertilizer') else None,
+            quantity=float(data['quantity']) if data.get('quantity') else None,
+            quantity_unit=data['quantity_unit'].strip() if data.get('quantity_unit') else None,
+            farm_id=data['farm_id'] if data.get('farm_id') else None,
+            id=data['id'] if data.get('id') else None,
+            created_at=data['created_at'] if data.get('created_at') else None,
+            farm=data['farm'] if data.get('farm') else None
         )

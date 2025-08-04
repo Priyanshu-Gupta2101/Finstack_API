@@ -29,6 +29,10 @@ class ScheduleServices:
         return ScheduleRepository.create(ScheduleHelper.from_dict(schedule_data))
     
     @staticmethod
+    def get_schedule_by_id(schedule_id):
+        return ScheduleRepository.get_by_id(schedule_id)
+    
+    @staticmethod
     def get_schedules_due_today():
         today = datetime.now().date()
         return ScheduleRepository.get_schedules_by_date(today)

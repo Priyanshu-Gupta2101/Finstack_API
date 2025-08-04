@@ -4,10 +4,7 @@ from models import Country
 class CountryMapper:
 
     @staticmethod
-    def model_to_helper(country_model) -> CountryHelper:
-        if not country_model:
-            return None
-            
+    def model_to_helper(country_model: Country) -> CountryHelper:
         return CountryHelper(
             id=country_model.id,
             name=country_model.name,

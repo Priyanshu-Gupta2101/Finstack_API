@@ -30,13 +30,11 @@ class AuthServices:
             "email": user.email,
         }
 
-        
         access_token = create_access_token(
             identity=str(user.id),
             additional_claims=additional_claims,
             expires_delta=timedelta(hours=24)
         )
-
 
         return {
             "access_token":access_token,
@@ -75,23 +73,3 @@ class AuthServices:
     @staticmethod
     def get_all_users(skip: int = 0, limit: int = 100):
         return AuthRepository.get_all(skip, limit)
-    
-    @staticmethod
-    def update_user(user_id: int, update_data: dict):
-        user = AuthRepository.get_by_id(user_id)
-        if not user:
-            raise ValueError("User not found")
-        
-        if update_data['role'] and not AuthRepository.is_valid_role(update_data.role):
-            raise ValueError("Invalid role specified")
-        
-        updated_user = AuthHelper.from_dict(update_data)
-        return AuthRepository.update(user_id, updated_user)
-        
-    @staticmethod
-    def delete_user(user_id: int):
-        user = AuthRepository.get_by_id(user_id)
-        if not user:
-            raise ValueError("User not found")
-        
-        return AuthRepository.delete(user)

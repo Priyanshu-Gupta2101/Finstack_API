@@ -25,6 +25,7 @@ class FarmerServices:
         existing_farmer = FarmerRepository.get_by_phone_and_country(
             phone_number, farmer_data["country_id"]
         )
+
         if existing_farmer:
             raise ValueError("Farmer with this phone number already exists in this country")
         
@@ -36,5 +37,16 @@ class FarmerServices:
             raise ValueError("Crop name is required")
 
         return FarmerRepository.get_farmers_by_crop(crop_name)
+    
+    @staticmethod
+    def get_active_farmers():
+        return FarmerRepository.get_active_farmers()
+    
+    @staticmethod
+    def get_farmers_by_id(id):
+        if not id:
+            raise ValueError("Farmer id is required")
+
+        return FarmerRepository.get_by_id(id)
 
     

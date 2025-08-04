@@ -1,21 +1,15 @@
-from helpers import ScheduleHelper, FarmHelper
+from typing import Optional
+from helpers import ScheduleHelper
 from models import Schedule
+from mappers import FarmMapper
 
 class ScheduleMapper:
     
     @staticmethod
-    def model_to_helper(schedule_model) -> ScheduleHelper:
+    def model_to_helper(schedule_model: Schedule) -> Optional[ScheduleHelper]:        
         farm_helper = None
         if schedule_model.farm:
-            farm_helper = FarmHelper(
-                id=schedule_model.farm.id,
-                area=schedule_model.farm.area,
-                village=schedule_model.farm.village,
-                crop_grown=schedule_model.farm.crop_grown,
-                sowing_date=schedule_model.farm.sowing_date,
-                farmer_id=schedule_model.farm.farmer_id,
-                created_at=schedule_model.farm.created_at
-            )
+            farm_helper = FarmMapper.model_to_helper(schedule_model.farm)
         
         return ScheduleHelper(
             id=schedule_model.id,

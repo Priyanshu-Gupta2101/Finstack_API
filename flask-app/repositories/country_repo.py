@@ -14,13 +14,21 @@ class CountryRepository:
     
     @staticmethod
     def get_by_id(country_id):
-        return CountryMapper.model_to_helper(Country.query.get(country_id))
+        country = Country.query.get(country_id)
+        if country is not None:
+            return CountryMapper.model_to_helper(country)
+        return None
     
     @staticmethod
     def get_by_code(code):
-        return CountryMapper.model_to_helper(Country.query.filter_by(code=code).first())
+        country = Country.query.filter_by(code=code).first()
+        if country is not None:
+            return CountryMapper.model_to_helper(country)
+        return None
     
     @staticmethod
     def get_all():
         countries = Country.query.all()
-        return [CountryMapper.model_to_helper(c) for c in countries]
+        if countries is not None:
+            return [CountryMapper.model_to_helper(c) for c in countries if c is not None]
+        return []
